@@ -38,15 +38,27 @@ void mapInitialisation(){
 	
 } 
 
+void classDeclations(){
+
+	
+	int classPlayer = rmDefineClass("player");
+	int classpatchCore = rmDefineClass("playercore");
+	int classCliff = rmDefineClass("cliff");
+	int classOcean =  rmDefineClass("ocean");
+	rmDefineClass("corner");
+	rmDefineClass("starting settlement");
+	
 
 
+}
 
-void main(void){
+
+void main(){
 
 
 
 	mapInitialisation();
-	
+	classDeclations();
 
 
 
