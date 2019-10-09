@@ -2,7 +2,7 @@
 include "MmM_FE_lib.xs";
 
 
-void mapInitialization(){
+void mapInitialisation(){
 
 	// Loading bar 
 	rmSetStatusText("",0.01);
@@ -45,7 +45,7 @@ void main(void){
 
 
 
-	mapInitialization();
+	mapInitialisation();
 	
 
 
