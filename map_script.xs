@@ -33,6 +33,7 @@ void mapInitialisation(){
 	rmTerrainInitialize(terrainBase);
 	rmSetGaiaCiv(cCivZeus);
 	
+	// Changes loading bar
 	rmSetStatusText("",0.07);
 	
 	
@@ -42,12 +43,14 @@ void classDeclations(){
 
 	
 	int classPlayer = rmDefineClass("player");
-	int classpatchCore = rmDefineClass("playercore");
-	int classCliff = rmDefineClass("cliff");
-	int classOcean =  rmDefineClass("ocean");
-	rmDefineClass("corner");
-	rmDefineClass("starting settlement");
+	int classPlayerCore = rmDefineClass("player core");
+	int classForest=rmDefineClass("forest");
+	int classHill = rmDefineClass("classHill");
+	int pathClass = rmDefineClass("path");
+	int classStartingSettlement = rmDefineClass("starting settlement");
 	
+	// Changes loading bar
+	rmSetStatusText("",0.13);
 
 
 }
@@ -64,14 +67,32 @@ void createdConstraints(){
 		
 }
 
+void globalConstraints(){
+	
+	int tinyAvoidImpassableLand = rmCreateTerrainDistanceConstraint("tiny avoid impassable land", "land", false, 1.0);
+	int pathConstraint = rmCreateClassDistanceConstraint("areas vs path", pathClass, 2.0);
+	int playerConstraint = rmCreateClassDistanceConstraint("stay away from players", classPlayer, 20);
+	int avoidPlayerCore = rmCreateClassDistanceConstraint("stay away from player core", classPlayerCore, 30.0);
+	int edgeConstraint = rmCreateBoxConstraint("edge of map", rmXTilesToFraction(8), rmZTilesToFraction(8), 1.0-rmXTilesToFraction(8), 1.0-rmZTilesToFraction(8));
+	
+	// Dunno
+	int et = 20;
+	int farEdgeConstraint = rmCreateBoxConstraint("far edge of map", rmXTilesToFraction(et), rmZTilesToFraction(et), 1.0-rmXTilesToFraction(et), 1.0-rmZTilesToFraction(et));
+	
+	// Changes loading bar
+	rmSetStatusText("",0.20);
+	
+	
+}
+
+
 void main(){
 
 
 
 	mapInitialisation();
 	classDeclations();
-	createdConstraints();
-
+	globalConstraints();
 
 
 
