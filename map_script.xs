@@ -55,6 +55,17 @@ void classDeclations(){
 
 }
 
+void createdConstraints(){
+	
+	int edgeConstraint = rmCreateBoxConstraint("edge of map", rmXtilesToFraction(3), rmZTilesToFraction(3), 1.0-rmXtilesToFraction(3), 1.0-rmZTilesToFraction(3));
+	
+	
+	
+		
+		
+		
+		
+}
 
 void globalConstraints(){
 	
@@ -82,7 +93,6 @@ void main(){
 	mapInitialisation();
 	classDeclations();
 	globalConstraints();
-
 
 
 
