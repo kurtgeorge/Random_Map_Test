@@ -59,7 +59,10 @@ void createdConstraints(){
 	
 	int edgeConstraint = rmCreateBoxConstraint("edge of map", rmXtilesToFraction(3), rmZTilesToFraction(3), 1.0-rmXtilesToFraction(3), 1.0-rmZTilesToFraction(3));
 	
-	
+	int playerConstraint=rmCreateClassDistanceConstraint("stay away from players", classPlayer, 20);
+	int avoidBuildings=rmCreateTypeDistanceConstraint("avoid buildings", "Building", 20.0);
+	int avoidImpassableLand=rmCreateTerrainDistanceConstraint("avoid impassable land", "land", false, 10.0);
+	int lakeConstraint=rmCreateClassDistanceConstraint("avoid the center", classLake, 25.0);
 	
 		
 		
@@ -93,7 +96,7 @@ void main(){
 	mapInitialisation();
 	classDeclations();
 	globalConstraints();
-
+	createdConstraints();
 
 
 
