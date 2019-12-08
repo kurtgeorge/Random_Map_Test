@@ -24,50 +24,30 @@ void mapInitialisation(){
 	rmEchoInfo("Map size="+size+"m x "+size+"m");
 	rmSetMapSize(size, size);
 
-	
-	// Default water level
+	// Default water level and type
 	rmSetSeaLevel(0.0);
+	rmSetSeaType(North Atlantic Ocean);
 	
 	// Init map
-	string terrainBase = "JungleA"; //"GrassA";
+	string terrainBase = "SnowA";
 	rmTerrainInitialize(terrainBase);
 	rmSetGaiaCiv(cCivZeus);
 	
 	// Changes loading bar
 	rmSetStatusText("",0.07);
-	
-	
 } 
 
 void classDeclations(){
 
-	
 	int classPlayer = rmDefineClass("player");
 	int classPlayerCore = rmDefineClass("player core");
 	int classForest=rmDefineClass("forest");
 	int classHill = rmDefineClass("classHill");
 	int pathClass = rmDefineClass("path");
-	int classStartingSettlement = rmDefineClass("starting settlement");
+	int classStartingSettlement = rmDefineClass("base settlement");
 	
 	// Changes loading bar
 	rmSetStatusText("",0.13);
-
-
-}
-
-void createdConstraints(){
-	
-	int edgeConstraint = rmCreateBoxConstraint("edge of map", rmXtilesToFraction(3), rmZTilesToFraction(3), 1.0-rmXtilesToFraction(3), 1.0-rmZTilesToFraction(3));
-	
-	int playerConstraint=rmCreateClassDistanceConstraint("stay away from players", classPlayer, 20);
-	int avoidBuildings=rmCreateTypeDistanceConstraint("avoid buildings", "Building", 20.0);
-	int avoidImpassableLand=rmCreateTerrainDistanceConstraint("avoid impassable land", "land", false, 10.0);
-	int lakeConstraint=rmCreateClassDistanceConstraint("avoid the center", classLake, 25.0);
-	
-		
-		
-		
-		
 }
 
 void globalConstraints(){
@@ -83,9 +63,18 @@ void globalConstraints(){
 	int farEdgeConstraint = rmCreateBoxConstraint("far edge of map", rmXTilesToFraction(et), rmZTilesToFraction(et), 1.0-rmXTilesToFraction(et), 1.0-rmZTilesToFraction(et));
 	
 	// Changes loading bar
-	rmSetStatusText("",0.20);
+	rmSetStatusText("",0.20);	
+}
+
+void createdConstraints(){
 	
+	int edgeConstraint = rmCreateBoxConstraint("edge of map", rmXtilesToFraction(3), rmZTilesToFraction(3), 1.0-rmXtilesToFraction(3), 1.0-rmZTilesToFraction(3));
 	
+	int playerConstraint=rmCreateClassDistanceConstraint("stay away from players", classPlayer, 20);
+	int avoidBuildings=rmCreateTypeDistanceConstraint("avoid buildings", "Building", 20.0);
+	int avoidImpassableLand=rmCreateTerrainDistanceConstraint("avoid impassable land", "land", false, 10.0);
+	int lakeConstraint=rmCreateClassDistanceConstraint("avoid the center", classLake, 25.0);
+			
 }
 
 
