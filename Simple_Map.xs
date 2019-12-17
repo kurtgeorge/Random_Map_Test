@@ -19,14 +19,21 @@ void initialConfig(){
 	rmSetGaiaCiv(cCivZeus);
 	
 	// Changes loading bar
-	rmSetStatusText("Inital Config Passed",0.07);  
+	rmSetStatusText("Inital Config Cleared",0.07);  
 }
 
 void classDeclarations(){
+	
+	rmSetStatusText("Class Dec",0.08);
 
+	int classPlayer = rmDefineClass("player");
+	int classGold = rmDefineClass("gold");
+	int classWood = rmDefineClass("wood");
+	int classStartTC = rmDefineClass("startTC");
+	int classBackTC = rmDefineClass("backTC");
 
-
-
+	rmSetStatus("Class Dec Cleared",0.13);
+	
 }
 
 
