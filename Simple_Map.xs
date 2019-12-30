@@ -65,35 +65,121 @@ void playerInit(){
 	int settlementHeavyConstraint=rmCreateTypeDistanceConstraint ("TCHeavyConst", "AbstractSettlement", 60.0);
 	// Avoids conflicts with TC locations and the objects surrounding them
 	
-	int towerConstraint=rmCreateTypeDistanceConstraint("TowerTowerConst", "tower", 20.0);
-   	int towerConstraint=rmCreateTypeDistanceConstraint("TowerObjectConst","tower", 250);
+	int towerToTowerConstraint=rmCreateTypeDistanceConstraint("TowerTowerConst", "tower", 20.0);
+   	int towerToObjectConstraint=rmCreateTypeDistanceConstraint("TowerObjectConst","tower", 250);
 	// Avoids tower conflicts 
 	
 	rmSetStatusText("pInit cleared",0.25);
 }
 
 void resourceInit()
-	
+
+	// Gold constraints
 	int goldLightConstraint=rmCreateTypeDistanceConstraint("goldLightConst", "gold", 10.0);
    	int goldHeavyConstraint=rmCreateTypeDistanceConstraint("goldHeavyConst", "gold", 30.0);
 
-
-
+	// Hunt constraints
 	int herdableConstraint=rmCreateTypeDistanceConstraint("herdableConst", "herdable", 30.0);
    	int predatorConstraint=rmCreateTypeDistanceConstraint("predatorConst", "animalPredator", 20.0);
-   	int foodConstraint=rmCreateTypeDistanceConstraint("animalConst", "food", 6.0);
-
-
-	
+   	int foodConstraint=rmCreateTypeDistanceConstraint("animalConst", "food", 6.0);	
 }
 
-void main(){
+void initalObjects(){
+	
+	int startingSettlementID=rmCreateObjectDef("startTC");
+   	
+	rmAddObjectDefItem(startingSettlementID, "Settlement Level 1", 1, 0.0);
+   	rmAddObjectDefToClass(startingSettlementID, rmClassID("startTC"));
+   	rmSetObjectDefMinDistance(startingSettlementID, 0.0);
+   	rmSetObjectDefMaxDistance(startingSettlementID, 0.0);
+	// Constraints make sure inital placement of TC is in the center of player zone
+
+	int startingTowerID=rmCreateObjectDef("Starting tower");
+   	rmAddObjectDefItem(startingTowerID, "tower", 1, 0.0);
+  	rmSetObjectDefMinDistance(startingTowerID, 22.0);
+   	rmSetObjectDefMaxDistance(startingTowerID, 28.0);
+   	rmAddObjectDefConstraint(startingTowerID, towerToTowerConstraint);
+   	rmAddObjectDefConstraint(startingTowerID, impassableConstraint);
+	// Constraints used for tower placement around inital TC
+	// Avoids placing down multiple towers to avoid them bunching up
+	
+	int startingGoldID=rmCreateObjectDef("Starting gold");
+   	rmAddObjectDefItem(startingGoldID, "Gold mine small", 1, 0.0);
+   	rmSetObjectDefMinDistance(startingGoldID, 20.0);
+   	rmSetObjectDefMaxDistance(startingGoldID, 25.0);
+   	rmAddObjectDefConstraint(startingGoldID, goldHeavyConstraint);
+   	rmAddObjectDefConstraint(startingGoldID, impassableConstraint);
+	// Constraints for the close gold near the initial TC
+
+	float pigNumber=rmRandFloat(2, 4);
+   	int closePigsID=rmCreateObjectDef("close pigs");
+   	rmAddObjectDefItem(closePigsID, "pig", pigNumber, 2.0);
+   	rmSetObjectDefMinDistance(closePigsID, 25.0);
+   	rmSetObjectDefMaxDistance(closePigsID, 30.0);
+   	rmAddObjectDefConstraint(closePigsID, impassableConstraint);
+   	rmAddObjectDefConstraint(closePigsID, foodConstraint);
+	// Constraints used for the herdables (this case pigs)
+	// Random number of pigs is defined to avoid random number spawning creating problems
+	
+	
+	int closeChickensID=rmCreateObjectDef("close Chickens");
+   	if(rmRandFloat(0,1)<0.5){
+      		rmAddObjectDefItem(closeChickensID, "chicken", rmRandInt(6,10), 5.0); 
+	}
+   	else {
+      		rmAddObjectDefItem(closeChickensID, "berry bush", rmRandInt(4,6), 4.0);
+	}
+   	rmSetObjectDefMinDistance(closeChickensID, 20.0);
+   	rmSetObjectDefMaxDistance(closeChickensID, 25.0);
+   	rmAddObjectDefConstraint(closeChickensID, impassableConstraint);
+   	rmAddObjectDefConstraint(closeChickensID, foodConstraint); 
+	// Constraints for the placement of close berries or chickens
+	// Which close hunt spawns is determined by a coin flip
+	
+	
+   	int closeBoarID=rmCreateObjectDef("close Boar");
+   	if(rmRandFloat(0,1)<0.7) {
+      		rmAddObjectDefItem(closeBoarID, "boar", rmRandInt(1,3), 4.0);
+	} else {
+      		rmAddObjectDefItem(closeBoarID, "aurochs", rmRandInt(1,2), 2.0);
+	}
+   	rmSetObjectDefMinDistance(closeBoarID, 30.0);
+   	rmSetObjectDefMaxDistance(closeBoarID, 50.0);
+   	rmAddObjectDefConstraint(closeBoarID, impassableConstraint);
+	// Constraints for the wild hunt of either boars or auroches
+	// Similar operation to the chickens and berries	
+}
+
+void mainObjects(){
+	
+	int mediumGoldID=rmCreateObjectDef("medium gold");
+   	rmAddObjectDefItem(mediumGoldID, "Gold mine", 1, 0.0);
+   	rmSetObjectDefMinDistance(mediumGoldID, 40.0);
+   	rmSetObjectDefMaxDistance(mediumGoldID, 60.0);
+   	rmAddObjectDefConstraint(mediumGoldID, goldHeavyConstraint);
+   	rmAddObjectDefConstraint(mediumGoldID, edgeConstraint);
+   	rmAddObjectDefConstraint(mediumGoldID, settlementLightConstraint);
+   	rmAddObjectDefConstraint(mediumGoldID, impassableConstraint);
+   	rmAddObjectDefConstraint(mediumGoldID, settlementHeavyConstraint);
+
+   	int mediumPigsID=rmCreateObjectDef("medium pigs");
+   	rmAddObjectDefItem(mediumPigsID, "pig", 2, 4.0);
+   	rmSetObjectDefMinDistance(mediumPigsID, 50.0);
+   	rmSetObjectDefMaxDistance(mediumPigsID, 70.0);
+   	rmAddObjectDefConstraint(mediumPigsID, impassableConstraint);
+   	rmAddObjectDefConstraint(mediumPigsID, herdableConstraint);
+   	rmAddObjectDefConstraint(mediumPigsID, settlementHeavyConstraint);
+}
+
+void main(void){
 
         initialConfig();
 	classDeclarations();
 	globalConstraints();
 	playerInit();
 	resourceInit();
+	initalObjects();
+	mainObjects();
 
 
 
