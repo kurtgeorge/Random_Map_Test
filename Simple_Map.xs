@@ -84,7 +84,7 @@ void resourceInit()
    	int foodConstraint=rmCreateTypeDistanceConstraint("animalConst", "food", 6.0);	
 }
 
-void initalObjects(){
+void lightObjects(){
 	
 	int startingSettlementID=rmCreateObjectDef("startTC");
    	
@@ -150,7 +150,7 @@ void initalObjects(){
 	// Similar operation to the chickens and berries	
 }
 
-void mainObjects(){
+void mediumObjects(){
 	
 	int mediumGoldID=rmCreateObjectDef("medium gold");
    	rmAddObjectDefItem(mediumGoldID, "Gold mine", 1, 0.0);
@@ -161,6 +161,7 @@ void mainObjects(){
    	rmAddObjectDefConstraint(mediumGoldID, settlementLightConstraint);
    	rmAddObjectDefConstraint(mediumGoldID, impassableConstraint);
    	rmAddObjectDefConstraint(mediumGoldID, settlementHeavyConstraint);
+	// Constraints for gold objects that have medium distance from starting TC
 
    	int mediumPigsID=rmCreateObjectDef("medium pigs");
    	rmAddObjectDefItem(mediumPigsID, "pig", 2, 4.0);
@@ -169,7 +170,50 @@ void mainObjects(){
    	rmAddObjectDefConstraint(mediumPigsID, impassableConstraint);
    	rmAddObjectDefConstraint(mediumPigsID, herdableConstraint);
    	rmAddObjectDefConstraint(mediumPigsID, settlementHeavyConstraint);
+	// Constraints for Hunt objects that have medium distance from starting TC
+	
 }
+
+
+void heavyObjects(){
+	
+
+	int farGoldID=rmCreateObjectDef("far gold");
+   	rmAddObjectDefItem(farGoldID, "Gold mine", 1, 0.0);
+   	rmSetObjectDefMinDistance(farGoldID, 70.0);
+   	rmSetObjectDefMaxDistance(farGoldID, 160.0);
+   	rmAddObjectDefConstraint(farGoldID, goldHeavyConstraint);
+   	rmAddObjectDefConstraint(farGoldID, impassableConstraint);
+   	rmAddObjectDefConstraint(farGoldID, settlementShortConstraint);
+   	rmAddObjectDefConstraint(farGoldID, settlementHeavyConstraint);
+	// Constraints for gold objects that have heavy distance from starting TC
+
+	int farPigsID=rmCreateObjectDef("far pigs");
+   	rmAddObjectDefItem(farPigsID, "pig", 2, 4.0);
+   	rmSetObjectDefMinDistance(farPigsID, 80.0);
+   	rmSetObjectDefMaxDistance(farPigsID, 150.0);
+   	rmAddObjectDefConstraint(farPigsID, impassableConstraint);
+   	rmAddObjectDefConstraint(farPigsID, herdableConstraint);
+   	rmAddObjectDefConstraint(farPigsID, settlementHeavyConstraint);
+	// Constraints for hunt objects that have heavy distance from starting TC
+	
+	
+   	int farPredatorID=rmCreateObjectDef("far predator");
+   	float predatorSpecies=rmRandFloat(0, 1);
+   	if(predatorSpecies<0.5) { 
+      		rmAddObjectDefItem(farPredatorID, "lion", 2, 4.0);
+	} else {
+      	rmAddObjectDefItem(farPredatorID, "bear", 1, 4.0);
+	}
+   	rmSetObjectDefMinDistance(farPredatorID, 50.0);
+   	rmSetObjectDefMaxDistance(farPredatorID, 100.0);
+   	rmAddObjectDefConstraint(farPredatorID, predatorConstraint);
+   	rmAddObjectDefConstraint(farPredatorID, settlementHeavyConstraint);
+   	rmAddObjectDefConstraint(farPredatorID, impassableConstraint);
+
+	
+}
+
 
 void main(void){
 
@@ -178,9 +222,9 @@ void main(void){
 	globalConstraints();
 	playerInit();
 	resourceInit();
-	initalObjects();
-	mainObjects();
-
+	lightObjects();
+	mediumObjects();
+	heavyObjects();
 
 
 }
