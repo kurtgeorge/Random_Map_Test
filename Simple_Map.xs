@@ -2,13 +2,13 @@ include "MmM_FE_lib.xs";
 
 void initialConfig(){
         
-    // Sets map parameters
-    rmSetStatusText("Init Cfig",0.01);
-    int tileCount = 8000;
-    int size=2.0*sqrt(cNumberNonGaiaPlayers*playerTiles/0.9);
-    rmSetMapSize(size, size);
+    	// Sets map parameters
+    	rmSetStatusText("Init Cfig",0.01);
+    	int tileCount = 8000;
+    	int size=2.0*sqrt(cNumberNonGaiaPlayers*playerTiles/0.9);
+    	rmSetMapSize(size, size);
 
-    // Default water level and type
+    	// Default water level and type
 	rmSetSeaLevel(0.0);
 	rmSetSeaType(Egyptian Nile);
 	
@@ -138,7 +138,7 @@ void lightObjects(){
    	int lightBoarID=rmCreateObjectDef("light Boar");
    	if(rmRandFloat(0,1)<0.7) {
       		rmAddObjectDefItem(lightBoarID, "boar", rmRandInt(1,3), 4.0);
-    } else {
+    	} else {
       		rmAddObjectDefItem(lightBoarID, "aurochs", rmRandInt(1,2), 2.0);
 	}
    	rmSetObjectDefMinDistance(lightBoarID, 30.0);
@@ -213,7 +213,7 @@ void heavyObjects(){
 
 void main(void){
 
-    initialConfig();
+    	initialConfig();
 	classDeclarations();
 	globalConstraints();
 	playerConstraints();
