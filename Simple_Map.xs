@@ -122,10 +122,9 @@ void lightObjects(){
 	
 	int lightChickensID=rmCreateObjectDef("light Chickens");
    	if(rmRandFloat(0,1)<0.5){
-      	rmAddObjectDefItem(lightChickensID, "chicken", rmRandInt(6,10), 5.0); 
-	}
-   	else {
-      	rmAddObjectDefItem(lightChickensID, "berry bush", rmRandInt(4,6), 4.0);
+      		rmAddObjectDefItem(lightChickensID, "chicken", rmRandInt(6,10), 5.0); 
+	} else {
+      		rmAddObjectDefItem(lightChickensID, "berry bush", rmRandInt(4,6), 4.0);
 	}
    	rmSetObjectDefMinDistance(lightChickensID, 20.0);
    	rmSetObjectDefMaxDistance(lightChickensID, 25.0);
@@ -200,7 +199,7 @@ void heavyObjects(){
    	if(predatorSpecies<0.5) { 
       		rmAddObjectDefItem(heavyPredatorID, "lion", 2, 4.0);
 	} else {
-      	rmAddObjectDefItem(heavyPredatorID, "bear", 1, 4.0);
+      		rmAddObjectDefItem(heavyPredatorID, "bear", 1, 4.0);
 	}
    	rmSetObjectDefMinDistance(heavyPredatorID, 50.0);
    	rmSetObjectDefMaxDistance(heavyPredatorID, 100.0);
